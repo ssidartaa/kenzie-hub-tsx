@@ -17,7 +17,7 @@ const InputPassword = forwardRef(
         </label>
 
         <div className="inputContainer">
-          <input className="input" id={id} {...rest} ref={ref} />
+          <input className="input" id={id} type={type} {...rest} ref={ref} />
 
           {type === "password" ? (
             <FaEyeSlash className="eye" onClick={() => setType("text")} />
