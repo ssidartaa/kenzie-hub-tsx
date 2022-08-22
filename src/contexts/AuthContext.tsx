@@ -99,18 +99,15 @@ const AuthProvider = ({ children }: IProviderProps) => {
             Authorization: `Bearer ${token}`,
           } as IHeaderProps;
 
-          const { data } = await api.get("/profile");
+          const { data }: IProfile = await api.get("/profile");
 
           setUser(data);
-          api
-            .get("/profile")
-            .then(({ data }: IProfile) =>
-              setTechs(
-                data.techs.sort((a, b) =>
-                  a.title > b.title ? 1 : a.title === b.title ? 0 : -1
-                )
-              )
-            );
+
+          setTechs(
+            data.techs.sort((a, b) =>
+              a.title > b.title ? 1 : a.title === b.title ? 0 : -1
+            )
+          );
 
           navigate("/dashboard", { replace: true });
         } catch (err) {
