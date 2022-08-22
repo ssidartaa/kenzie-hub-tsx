@@ -28,6 +28,11 @@ interface IUser {
   email: string;
   course_module: string;
   techs: ITech[];
+  bio?: string;
+  contact?: string;
+  created_at?: string;
+  updated_at?: string;
+  avatar_url?: string;
 }
 
 export interface ILogin {
@@ -66,6 +71,10 @@ interface IAuthValue {
 
 interface IProfile {
   data: IUser;
+}
+
+interface ISessions {
+  data: { user: IUser; token: string };
 }
 
 interface IHeaderProps extends HeadersDefaults {
@@ -126,10 +135,10 @@ const AuthProvider = ({ children }: IProviderProps) => {
   const signIn = (account: ILogin) => {
     api
       .post("sessions", account)
-      .then((res) => {
-        setUser(res.data.user);
+      .then(({ data }: ISessions) => {
+        setUser(data.user);
 
-        localStorage.setItem("@kenzieHub:token", res.data.token);
+        localStorage.setItem("@kenzieHub:token", data.token);
 
         navigate("/dashboard", { replace: true });
 
